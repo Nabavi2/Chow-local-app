@@ -41,10 +41,7 @@ export const UpdateStatusScreen = ({navigation}) => {
       body: formData,
     })
       .then(res => {
-        console.log(
-          '------------------------------------------------------------- order id:' +
-            orderId,
-        );
+      
         setOrderDetail(res.data);
       })
       .catch(err =>
@@ -65,10 +62,6 @@ export const UpdateStatusScreen = ({navigation}) => {
       .then(res => {
         setStatusList(res.data.statuses);
         setKeys(Object.keys(res.data.statuses));
-
-        console.log('----tttLLLLLLLLLLLLLLLLLLLLL', type);
-        console.log('entire status', res.data.statuses);
-        console.log('delivery_request_by', delivery_request_by);
 
         if (type == 'deliver') {
           console.log('DDDDDDDDDDd');
@@ -100,16 +93,7 @@ export const UpdateStatusScreen = ({navigation}) => {
                 item != 'processing',
             ),
           );
-          console.log(
-            'dddd',
-            Object.keys(res.data.statuses).filter(
-              item =>
-                item != 'delivery-en-route' &&
-                item != 'ready-for-delivery' &&
-                item != 'delivered' &&
-                item != 'processing',
-            ),
-          );
+         
         }
       })
       .catch(err =>
