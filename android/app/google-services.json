@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "136006348676",
+    "project_id": "chowlocal",
+    "storage_bucket": "chowlocal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:136006348676:android:8d76e9d5a29ccbbb0b77d1",
+        "android_client_info": {
+          "package_name": "com.chowlocalvendor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "136006348676-ppttj18fsn7ak5pkqsbhvukb5h05075q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKKZdPTaUU5MrYgfaRt13w-JEvvKCRERc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "136006348676-ppttj18fsn7ak5pkqsbhvukb5h05075q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
