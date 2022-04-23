@@ -23,7 +23,6 @@ export const Tabs = ({
 };
 
 
-const [activeTabIndex, setActiveTabIndex] = useState(0);
   return (
     <ScrollView style={{marginBottom: -16,marginTop:-10}} 
     onScroll={({nativeEvent}) => {        

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, {useMemo} from 'react';
 import {
   Animated,
   ImageBackground,
@@ -13,19 +13,32 @@ import {
 } from 'react-native';
 
 import LinearGradient from 'react-native-linear-gradient';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Theme } from '~/styles';
-import { DeviceInfo, getDeviceId, getModel } from 'react-native-device-info'; 
-import { Notification, Loading } from '..';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {Theme} from '~/styles';
+import {getModel} from 'react-native-device-info';
+import {Notification, Loading} from '..';
 
 const HEADER_MAX_HEIGHT = 0;
 const test = getModel();
-const bottomMargin = Platform.OS === 'ios' ? test === 'iPhone 11' || test === 'iPhone 11 Pro' ? 0 : 30 : 0;
-const iOSPhone = Platform.OS === 'ios' && ( test === 'iPhone 11' || test === 'iPhone 11 Pro' || test === 'iPhone 12 Pro' || test === 'iPhone 12' || test === 'iPhone'? true : false);
+const bottomMargin =
+  Platform.OS === 'ios'
+    ? test === 'iPhone 11' || test === 'iPhone 11 Pro'
+      ? 0
+      : 30
+    : 0;
+const iOSPhone =
+  Platform.OS === 'ios' &&
+  (test === 'iPhone 11' ||
+  test === 'iPhone 11 Pro' ||
+  test === 'iPhone 12 Pro' ||
+  test === 'iPhone 12' ||
+  test === 'iPhone'
+    ? true
+    : false);
 const HEADER_MIN_HEIGHT = Platform.OS === 'ios' ? 100 : 70;
 const HEADER_SCROLL_DISTANCE = HEADER_MIN_HEIGHT - HEADER_MAX_HEIGHT;
 const windowHeight = Dimensions.get('window').height;
-const Content = ({ hasList, align, children }) => {
+const Content = ({hasList, align, children}) => {
   const alignStyle = useMemo(() => {
     switch (align) {
       case 'top':
@@ -39,14 +52,14 @@ const Content = ({ hasList, align, children }) => {
   }, [align]);
 
   return hasList ? (
-    <View style={[{ flex: 1, backgroundColor: 'white' }, alignStyle]}>
+    <View style={[{flex: 1, backgroundColor: 'white'}, alignStyle]}>
       {children}
     </View>
   ) : (
     <ScrollView
       alwaysBounceVertical={false}
       keyboardShouldPersistTaps="always"
-      style={{ flex: 1 }}
+      style={{flex: 1}}
       contentContainerStyle={[styles.container, alignStyle]}>
       {children}
     </ScrollView>
@@ -55,10 +68,12 @@ const Content = ({ hasList, align, children }) => {
 
 class CustomKeyBoardAvoidingView extends React.Component {
   render() {
-    const { keyboardAware, children } = this.props;
+    const {keyboardAware, children} = this.props;
     if (keyboardAware) {
       return (
-        <KeyboardAwareScrollView {...this.props} keyboardShouldPersistTaps="handled">
+        <KeyboardAwareScrollView
+          {...this.props}
+          keyboardShouldPersistTaps="handled">
           {children}
         </KeyboardAwareScrollView>
       );
@@ -74,7 +89,7 @@ class AnimatedHeader extends React.Component {
   constructor(props) {
     super(props);
 
-    const { statusBar, backgroundImage } = props;
+    const {statusBar, backgroundImage} = props;
 
     this.defaultBarStyle = statusBar
       ? statusBar
@@ -88,14 +103,14 @@ class AnimatedHeader extends React.Component {
     };
   }
 
-  setBarStyle = (barStyle) => {
+  setBarStyle = barStyle => {
     this.setState({
       currentBarStyle: barStyle ? barStyle : this.defaultBarStyle,
     });
   };
 
   render() {
-    const { headerOverLayAlwaysVisible } = this.props;
+    const {headerOverLayAlwaysVisible} = this.props;
 
     const headerHeight = headerOverLayAlwaysVisible
       ? HEADER_MIN_HEIGHT
@@ -105,7 +120,7 @@ class AnimatedHeader extends React.Component {
           extrapolate: 'clamp',
         });
 
-    const { currentBarStyle } = this.state;
+    const {currentBarStyle} = this.state;
 
     return (
       <View style={[styles.fill]}>
@@ -114,10 +129,10 @@ class AnimatedHeader extends React.Component {
           style={[styles.fill]}
           scrollEventThrottle={16}
           onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: this.state.scrollY } } }],
+            [{nativeEvent: {contentOffset: {y: this.state.scrollY}}}],
             {
               useNativeDriver: false,
-              listener: (event) => {
+              listener: event => {
                 const offsetY = event.nativeEvent.contentOffset.y;
                 // do something special
                 this.setBarStyle(
@@ -126,17 +141,17 @@ class AnimatedHeader extends React.Component {
               },
             },
           )}>
-          <View style={{ flex: 1 }}>{this.props.children}</View>
+          <View style={{flex: 1}}>{this.props.children}</View>
         </ScrollView>
-        <Animated.View style={[styles.header, { height: headerHeight }]}>
+        <Animated.View style={[styles.header, {height: headerHeight}]}>
           <LinearGradient
             colors={['rgba(0,0,0,1)', 'rgba(0,0,0,0)', 'rgba(256,256,256,0)']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
+            start={{x: 0, y: 0}}
+            end={{x: 1, y: 1}}
             locations={[0, 0.8, 1]}
             useAngle
             angle={180}
-            style={{ flex: 1 }}>
+            style={{flex: 1}}>
             <StatusBar barStyle={currentBarStyle} />
           </LinearGradient>
         </Animated.View>
@@ -162,7 +177,12 @@ export const Screen = ({
   messageInputKeyboardAware = false,
 }) =>
   showHeaderOverLayOnScroll || headerOverLayAlwaysVisible ? (
-    <View style={[styles.rootContainer, {backgroundColor:backgroundColor}, iOSPhone == true && {paddingBottom: 35}]}>      
+    <View
+      style={[
+        styles.rootContainer,
+        {backgroundColor: backgroundColor},
+        iOSPhone == true && {paddingBottom: 35},
+      ]}>
       <AnimatedHeader
         statusBar={statusBar}
         backgroundImage={backgroundImage}
@@ -170,7 +190,7 @@ export const Screen = ({
         {backgroundImage ? (
           <ImageBackground
             source={backgroundImage}
-            style={styles.imageBackground_overlay}>              
+            style={styles.imageBackground_overlay}>
             <View style={styles.overlay} />
             <CustomKeyBoardAvoidingView
               keyboardAware={keyboardAware}
@@ -184,7 +204,6 @@ export const Screen = ({
             </CustomKeyBoardAvoidingView>
           </ImageBackground>
         ) : (
-          
           <CustomKeyBoardAvoidingView
             keyboardAware={keyboardAware}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -192,49 +211,53 @@ export const Screen = ({
             <Notification />
             {isLoading && <Loading />}
             <Content hasList={hasList} align={align}>
-              {children}             
+              {children}
             </Content>
-          </CustomKeyBoardAvoidingView>        
+          </CustomKeyBoardAvoidingView>
         )}
       </AnimatedHeader>
-      {stickyBottom &&
-      <View style={{marginTop:-80}}>
-      {stickyBottom}
-      </View>}
+      {stickyBottom && <View style={{marginTop: -80}}>{stickyBottom}</View>}
     </View>
-  ) : messageInputKeyboardAware == true ? 
-  ( 
-    <KeyboardAwareScrollView keyboardShouldPersistTaps style={[styles.rootContainer,fullScreen && styles.fullScreen, { backgroundColor: backgroundColor }]} 
-    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>    
-    <View
-      style={[styles.rootContainer, { backgroundColor: backgroundColor }]}>
-      <StatusBar
-        barStyle={
-          statusBar
-            ? statusBar
-            : backgroundImage
-            ? 'light-content'
-            : 'dark-content'
-        }
-      />     
-      <CustomKeyBoardAvoidingView
-        keyboardAware={keyboardAware}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={[styles.container, {height:(windowHeight - Theme.header.height - 100 + bottomMargin) }, fullScreen && styles.fullScreen]}>
-        <Notification />
-        {isLoading && <Loading />}
-        <Content hasList={hasList} align={align}>
-          {children}
-        </Content>                
-      </CustomKeyBoardAvoidingView>   
-      {stickyBottom && stickyBottom}
-      </View>  
+  ) : messageInputKeyboardAware == true ? (
+    <KeyboardAwareScrollView
+      keyboardShouldPersistTaps
+      style={[
+        styles.rootContainer,
+        fullScreen && styles.fullScreen,
+        {backgroundColor: backgroundColor},
+      ]}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <View style={[styles.rootContainer, {backgroundColor: backgroundColor}]}>
+        <StatusBar
+          barStyle={
+            statusBar
+              ? statusBar
+              : backgroundImage
+              ? 'light-content'
+              : 'dark-content'
+          }
+        />
+        <CustomKeyBoardAvoidingView
+          keyboardAware={keyboardAware}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={[
+            styles.container,
+            {height: windowHeight - Theme.header.height - 100 + bottomMargin},
+            fullScreen && styles.fullScreen,
+          ]}>
+          <Notification />
+          {isLoading && <Loading />}
+          <Content hasList={hasList} align={align}>
+            {children}
+          </Content>
+        </CustomKeyBoardAvoidingView>
+        {stickyBottom && stickyBottom}
+      </View>
     </KeyboardAwareScrollView>
-  ) :
-  ( 
+  ) : (
     // <KeyboardAwareScrollView keyboardAware={true} style={[styles.rootContainer, { backgroundColor: backgroundColor }]} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
     <SafeAreaView
-      style={[styles.rootContainer, { backgroundColor: backgroundColor }]}>
+      style={[styles.rootContainer, {backgroundColor: backgroundColor}]}>
       <StatusBar
         barStyle={
           statusBar
@@ -272,13 +295,13 @@ export const Screen = ({
             {children}
           </Content>
         </CustomKeyBoardAvoidingView>
-      )}   
-       {stickyBottom && stickyBottom}
+      )}
+      {stickyBottom && stickyBottom}
       {/* <View style={{marginTop:-80}}>
       {stickyBottom}
       </View>} */}
     </SafeAreaView>
-      // </KeyboardAwareScrollView>
+    // </KeyboardAwareScrollView>
   );
 
 const styles = StyleSheet.create({
@@ -292,7 +315,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   ios_mb_30: {
-    marginBottom:30
+    marginBottom: 30,
   },
   header: {
     position: 'absolute',
@@ -359,7 +382,7 @@ const styles = StyleSheet.create({
     left: 0,
     top: 0,
     right: 0,
-    height: Dimensions.get('window').height-35,
+    height: Dimensions.get('window').height - 35,
     resizeMode: 'contain',
   },
 

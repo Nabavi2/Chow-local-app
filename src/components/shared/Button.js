@@ -1,15 +1,10 @@
-import React, { useMemo } from 'react';
-import { TouchableOpacity, View, StyleSheet } from 'react-native';
+import React, {useMemo} from 'react';
+import {TouchableOpacity, View, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { AppText } from '~/components';
-import { Theme, Controls } from '~/styles';
+import {AppText} from '~/components';
+import {Theme, Controls} from '~/styles';
 
-// Available Types:
-// accent
-// bordered-light
-// bordered-dark
-// borderless
 export const Button = ({
   type,
   children,
@@ -105,8 +100,12 @@ export const Button = ({
           />
         </View>
       )}
-      <AppText style={[styles.text, textStyle, titleStyle]}>{children} </AppText>
-      {unreadText != null &&<AppText style={styles.unreadDot}>{unreadText}</AppText>}    
+      <AppText style={[styles.text, textStyle, titleStyle]}>
+        {children}{' '}
+      </AppText>
+      {unreadText != null && (
+        <AppText style={styles.unreadDot}>{unreadText}</AppText>
+      )}
       {rightText ? (
         <View style={styles.right}>
           <AppText style={[styles.text, textStyle, titleStyle]}>
@@ -134,18 +133,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  unreadDot: {  
-    justifyContent:'center',
-    textAlign:"center", 
+  unreadDot: {
+    justifyContent: 'center',
+    textAlign: 'center',
     fontSize: 11,
-    color: "#fff",    
-    fontWeight: "bold",
-    backgroundColor: "#f00",
-    borderRadius: 8, 
-    minWidth:18,
+    color: '#fff',
+    fontWeight: 'bold',
+    backgroundColor: '#f00',
+    borderRadius: 8,
+    minWidth: 18,
     minHeight: 18,
     marginTop: -3,
-    paddingHorizontal: 5
+    paddingHorizontal: 5,
   },
   alignLeft: {
     justifyContent: 'flex-start',
@@ -170,10 +169,10 @@ const styles = StyleSheet.create({
     borderColor: '#31D457',
     backgroundColor: '#31D457',
   },
- 
+
   splash: {
-    borderColor:'transparent',
-    backgroundColor:"#ffffff66"
+    borderColor: 'transparent',
+    backgroundColor: '#ffffff66',
   },
 
   bordered: {

@@ -89,12 +89,6 @@ export const RequestDeliveryDetailScreen = ({navigation}) => {
       ' - ' +
       moment(second).format('h:mm A') +
       ')';
-    //console.log("test@@@@@@@@@@@@@@@@@@@",preOrderTime.toISOString().substring(0,16).replace("T"," "),preOrderString);
-    console.log(
-      'test@@@@@@@@@@@@@@@@@@@',
-      preOrderTime.toISOString().substring(0, 16).replace('T', ' '),
-      preOrderString,
-    );
     setPreOrderDate(
       preOrderTime.toISOString().substring(0, 16).replace('T', ' '),
     );
@@ -108,10 +102,7 @@ export const RequestDeliveryDetailScreen = ({navigation}) => {
   }, []);
 
   useEffect(() => {
-    // const dateRegina = moment(orderDate).tz('America/Regina').format();
-    // const preOrderTime = new Date(dateRegina.substring(0,19)+".000Z");
     const preOrderTime = new Date(orderDate);
-    //console.log("prer@@@@@@@@@@@@sdsdfsdfsdfsdfsf@@@@@@@@@", preOrderTime);
     setPreOrder(preOrderTime);
   }, [orderDate]);
 
@@ -216,11 +207,7 @@ export const RequestDeliveryDetailScreen = ({navigation}) => {
     if (deliveryType == 'pickup') {
       if (token) {
         //the client should accept the order only if the ETA is set.
-        console.log(
-          '------------------order id test ------------',
-          orderId_Edit,
-          orderId,
-        );
+
         setLoading(true);
         const formData = new FormData();
         formData.append('order_id', orderId_Edit);
@@ -265,7 +252,6 @@ export const RequestDeliveryDetailScreen = ({navigation}) => {
 
           setLoading(true);
           const formData = new FormData();
-          console.log('###################@@@@@@@@@@@@@@#########', orderId);
           if (orderId_Edit != undefined) {
             formData.append('order_id', orderId_Edit);
           } else {
@@ -332,11 +318,6 @@ export const RequestDeliveryDetailScreen = ({navigation}) => {
                 body: formData,
               })
                 .then(res => {
-                  console.log(
-                    '---------current order id-----------',
-                    orderId,
-                    orderId_Edit,
-                  );
                   if (orderId == '' && order_nr != '123') {
                     console.log('checking the order id', orderId);
                     //NavigationService.navigate("DeliveryETA",{orderId: orderId_Edit, delivery_request_id: res.data.delivery_request_id});

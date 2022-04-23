@@ -1,11 +1,11 @@
-import React, { useMemo } from 'react';
-import { View, StyleSheet, FlatList, Text } from 'react-native';
+import React, {useMemo} from 'react';
+import {View, StyleSheet, FlatList, Text} from 'react-native';
 
-import { NavigationService } from '~/core/services';
-import { Screen, Button, AppText } from '~/components';
-import { GlobalStyles, MainNavigationOptions, Theme } from '~/styles';
+import {NavigationService} from '~/core/services';
+import {Screen, Button, AppText} from '~/components';
+import {GlobalStyles, MainNavigationOptions, Theme} from '~/styles';
 
-export const SelectorPageScreen = ({ navigation }) => {
+export const SelectorPageScreen = ({navigation}) => {
   const header = useMemo(() => navigation.getParam('header'), []);
   const options = useMemo(() => navigation.getParam('options'), []);
   const action = useMemo(() => navigation.getParam('action'), []);
@@ -22,7 +22,7 @@ export const SelectorPageScreen = ({ navigation }) => {
             alwaysBounceVertical={false}
             data={options}
             keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => {
+            renderItem={({item}) => {
               return (
                 item && (
                   <Button
@@ -45,7 +45,9 @@ export const SelectorPageScreen = ({ navigation }) => {
             }}
           />
         ) : (
-          <Text allowFontScaling={false} style={styles.textStyle}>{noOptionsText}</Text>
+          <Text allowFontScaling={false} style={styles.textStyle}>
+            {noOptionsText}
+          </Text>
         )}
       </View>
     </Screen>
@@ -72,7 +74,7 @@ const styles = StyleSheet.create({
   },
 });
 
-SelectorPageScreen.navigationOptions = ({ navigation }) =>
+SelectorPageScreen.navigationOptions = ({navigation}) =>
   MainNavigationOptions({
     navigation,
     options: {

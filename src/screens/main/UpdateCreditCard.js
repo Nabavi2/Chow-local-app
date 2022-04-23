@@ -40,7 +40,6 @@ export const UpdateCreditCardScreen = ({ navigation }) => {
       body: formData,
     })
       .then(async (res) => {
-        console.log("res@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@", res.data);
         const formData = new FormData();
         formData.append("territory", territory_id); 
         formData.append("app", "seller");
@@ -52,7 +51,6 @@ export const UpdateCreditCardScreen = ({ navigation }) => {
           body: formData,
         })
         .then((res) => {
-          console.log("tes@@@@@@@", res.data);
           setStatus("Active");
           dispatch(showNotification({ type: 'success', message: res.message }));
           NavigationService.goBack();

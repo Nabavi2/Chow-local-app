@@ -1,25 +1,34 @@
-import React,{ useEffect, useState, useMemo, useCallback } from 'react';
-import { View, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { NavigationService } from '~/core/services';
-import { Screen, Input, Button, AppText } from '~/components';
-import { GlobalStyles, MainNavigationOptions, Theme } from '~/styles';
-import { showNotification } from '~/store/actions';
-import { fetchAPI } from '~/core/utility';
+import React, {useEffect, useState, useMemo, useCallback} from 'react';
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {NavigationService} from '~/core/services';
+import {Screen, Input, Button, AppText} from '~/components';
+import {GlobalStyles, MainNavigationOptions, Theme} from '~/styles';
+import {showNotification} from '~/store/actions';
+import {fetchAPI} from '~/core/utility';
 
 export const DeliveryETAScreen = ({navigation}) => {
   const dispatch = useDispatch();
-  const token = useSelector((state) => state.account.token);  
+  const token = useSelector(state => state.account.token);
   const [isLoading, setLoading] = useState(false);
   const orderId = useMemo(() => navigation.getParam('orderId'), []);
-  const delivery_request_id = useMemo(() => navigation.getParam('delivery_request_id'), []);
+  const delivery_request_id = useMemo(
+    () => navigation.getParam('delivery_request_id'),
+    [],
+  );
 
-  const saveETA = useCallback((time) => {
+  const saveETA = useCallback(time => {
     setLoading(true);
     const formData = new FormData();
-    formData.append("app", "seller");      
-    formData.append("delivery_request_id", delivery_request_id); 
-    formData.append("delivery_eta", time);
+    formData.append('app', 'seller');
+    formData.append('delivery_request_id', delivery_request_id);
+    formData.append('delivery_eta', time);
     fetchAPI(`/delivery_request/save_eta`, {
       method: 'POST',
       headers: {
@@ -27,129 +36,129 @@ export const DeliveryETAScreen = ({navigation}) => {
       },
       body: formData,
     })
-      .then((res) => {
-        if(orderId != undefined){      
-          NavigationService.reset("Home");
-          NavigationService.navigate("PastOrders",{activeTab: 1});
-          NavigationService.navigate("OrderDetails", {orderId: orderId, requestDelivery: true, delivery_request_id: delivery_request_id});
-        } else {      
-          NavigationService.reset("Home");
-          NavigationService.navigate("PastOrders",{activeTab: 1});      
+      .then(res => {
+        if (orderId != undefined) {
+          NavigationService.reset('Home');
+          NavigationService.navigate('PastOrders', {activeTab: 1});
+          NavigationService.navigate('OrderDetails', {
+            orderId: orderId,
+            requestDelivery: true,
+            delivery_request_id: delivery_request_id,
+          });
+        } else {
+          NavigationService.reset('Home');
+          NavigationService.navigate('PastOrders', {activeTab: 1});
         }
       })
-      .catch((err) =>
-        dispatch(showNotification({ type: 'error', message: err.message })),
+      .catch(err =>
+        dispatch(showNotification({type: 'error', message: err.message})),
       )
       .finally(() => setLoading(false));
-    
-   
   });
 
   return (
-    <Screen isLoading={isLoading} keyboardAware={true} > 
-      <View style={styles.container}>       
+    <Screen isLoading={isLoading} keyboardAware={true}>
+      <View style={styles.container}>
         <AppText style={styles.number}>
-         When will this order be ready to deliver?
+          When will this order be ready to deliver?
         </AppText>
-          <View style={{flexDirection:'row' }}>
-            <Button
-              type="bordered-dark"
-              style={{marginTop: 20, marginRight: 10, marginBottom:10, flex: 1}}
-              fullWidth
-              onClick={() => saveETA('5')}>
-              5 Min
-            </Button>
-            <Button
-              type="bordered-dark"
-              fullWidth
-              style={{marginTop: 20,  marginLeft: 10, marginBottom:10, flex: 1}}
-              onClick={() => saveETA('10')}>
-              10 Min
-            </Button>
-          </View>
-          <View style={{flexDirection:'row' }}>
-            <Button
-              type="bordered-dark"
-              style={{ marginRight: 10, marginBottom:10, flex: 1}}
-              fullWidth
-              onClick={() => saveETA('15')}>
-              15 Min
-            </Button>
-            <Button
-              type="bordered-dark"
-              fullWidth
-              style={{ marginLeft: 10, marginBottom:10, flex: 1}}
-              onClick={() => saveETA('20')}>
-              20 Min
-            </Button>
-          </View>
-          <View style={{flexDirection:'row' }}>
-            <Button
-              type="bordered-dark"
-              style={{ marginRight: 10, marginBottom:10, flex: 1}}
-              fullWidth
-              onClick={() => saveETA('25')}>
-              25 Min
-            </Button>
-            <Button
-              type="bordered-dark"
-              fullWidth
-              style={{ marginLeft: 10, marginBottom:10, flex: 1}}
-              onClick={() => saveETA('30')}>
-              30 Min
-            </Button>
-          </View>
-          <View style={{flexDirection:'row' }}>
-            <Button
-              type="bordered-dark"
-              style={{ marginRight: 10, marginBottom:10, flex: 1}}
-              fullWidth
-              onClick={() => saveETA('35')}>
-              35 Min
-            </Button>
-            <Button
-              type="bordered-dark"
-              fullWidth
-              style={{ marginLeft: 10, marginBottom:10, flex: 1}}
-              onClick={() => saveETA('40')}>
-              40 Min
-            </Button>
-          </View>
-          <View style={{flexDirection:'row' }}>
-            <Button
-              type="bordered-dark"
-              style={{ marginRight: 10, marginBottom:10, flex: 1}}
-              fullWidth
-              onClick={() => saveETA('45')}>
-              45 Min
-            </Button>
-            <Button
-              type="bordered-dark"
-              fullWidth
-              style={{ marginLeft: 10, marginBottom:10, flex: 1}}
-              onClick={() => saveETA('50')}>
-              50 Min
-            </Button>
-          </View>
-          <View style={{flexDirection:'row' }}>
-            <Button
-              type="bordered-dark"
-              style={{ marginRight: 10, marginBottom:10, flex: 1}}
-              fullWidth
-              onClick={() => saveETA('55')}>
-              55 Min
-            </Button>
-            <Button
-              type="bordered-dark"
-              fullWidth
-              style={{ marginLeft: 10, marginBottom:10, flex: 1}}
-              onClick={() => saveETA('60')}>
-              60 Min
-            </Button>
-          </View>
-       
+        <View style={{flexDirection: 'row'}}>
+          <Button
+            type="bordered-dark"
+            style={{marginTop: 20, marginRight: 10, marginBottom: 10, flex: 1}}
+            fullWidth
+            onClick={() => saveETA('5')}>
+            5 Min
+          </Button>
+          <Button
+            type="bordered-dark"
+            fullWidth
+            style={{marginTop: 20, marginLeft: 10, marginBottom: 10, flex: 1}}
+            onClick={() => saveETA('10')}>
+            10 Min
+          </Button>
+        </View>
+        <View style={{flexDirection: 'row'}}>
+          <Button
+            type="bordered-dark"
+            style={{marginRight: 10, marginBottom: 10, flex: 1}}
+            fullWidth
+            onClick={() => saveETA('15')}>
+            15 Min
+          </Button>
+          <Button
+            type="bordered-dark"
+            fullWidth
+            style={{marginLeft: 10, marginBottom: 10, flex: 1}}
+            onClick={() => saveETA('20')}>
+            20 Min
+          </Button>
+        </View>
+        <View style={{flexDirection: 'row'}}>
+          <Button
+            type="bordered-dark"
+            style={{marginRight: 10, marginBottom: 10, flex: 1}}
+            fullWidth
+            onClick={() => saveETA('25')}>
+            25 Min
+          </Button>
+          <Button
+            type="bordered-dark"
+            fullWidth
+            style={{marginLeft: 10, marginBottom: 10, flex: 1}}
+            onClick={() => saveETA('30')}>
+            30 Min
+          </Button>
+        </View>
+        <View style={{flexDirection: 'row'}}>
+          <Button
+            type="bordered-dark"
+            style={{marginRight: 10, marginBottom: 10, flex: 1}}
+            fullWidth
+            onClick={() => saveETA('35')}>
+            35 Min
+          </Button>
+          <Button
+            type="bordered-dark"
+            fullWidth
+            style={{marginLeft: 10, marginBottom: 10, flex: 1}}
+            onClick={() => saveETA('40')}>
+            40 Min
+          </Button>
+        </View>
+        <View style={{flexDirection: 'row'}}>
+          <Button
+            type="bordered-dark"
+            style={{marginRight: 10, marginBottom: 10, flex: 1}}
+            fullWidth
+            onClick={() => saveETA('45')}>
+            45 Min
+          </Button>
+          <Button
+            type="bordered-dark"
+            fullWidth
+            style={{marginLeft: 10, marginBottom: 10, flex: 1}}
+            onClick={() => saveETA('50')}>
+            50 Min
+          </Button>
+        </View>
+        <View style={{flexDirection: 'row'}}>
+          <Button
+            type="bordered-dark"
+            style={{marginRight: 10, marginBottom: 10, flex: 1}}
+            fullWidth
+            onClick={() => saveETA('55')}>
+            55 Min
+          </Button>
+          <Button
+            type="bordered-dark"
+            fullWidth
+            style={{marginLeft: 10, marginBottom: 10, flex: 1}}
+            onClick={() => saveETA('60')}>
+            60 Min
+          </Button>
+        </View>
       </View>
-  
     </Screen>
   );
 };
@@ -164,7 +173,7 @@ const styles = StyleSheet.create({
   number: {
     fontSize: 15,
     textAlign: 'center',
-    color: "#484848"
+    color: '#484848',
   },
 
   orderNumber: {
@@ -186,14 +195,14 @@ const styles = StyleSheet.create({
 
   radio: {
     flexDirection: 'row',
-    marginLeft: 10
+    marginLeft: 10,
   },
 
   radioBackground: {
     backgroundColor: Theme.color.container,
     borderWidth: 0,
     marginLeft: 0,
-    paddingHorizontal:0
+    paddingHorizontal: 0,
   },
 
   address: {
@@ -203,7 +212,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 10,
     backgroundColor: '#e8e8e8',
-    height:50
+    height: 50,
   },
 
   iconWrapper: {
@@ -217,17 +226,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 5,
   },
-  
+
   summaryValue: {
     fontSize: 14,
-    flex:2,
+    flex: 2,
     textAlign: 'right',
   },
 
   summaryKey: {
     fontSize: 16,
-    flex:10,
-    textAlign: 'right'
+    flex: 10,
+    textAlign: 'right',
   },
 
   imageContainer: {
@@ -251,7 +260,7 @@ const styles = StyleSheet.create({
   },
 });
 
-DeliveryETAScreen.navigationOptions = ({ navigation }) =>
+DeliveryETAScreen.navigationOptions = ({navigation}) =>
   MainNavigationOptions({
     navigation,
     options: {

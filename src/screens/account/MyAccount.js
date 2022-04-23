@@ -1,17 +1,17 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import {View, StyleSheet} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 
-import { NavigationService } from '~/core/services';
-import { Screen, Button, AppText } from '~/components';
-import { GlobalStyles, MainNavigationOptions, Theme } from '~/styles';
+import {NavigationService} from '~/core/services';
+import {Screen, Button, AppText} from '~/components';
+import {GlobalStyles, MainNavigationOptions, Theme} from '~/styles';
 import BackgroundTimer from 'react-native-background-timer';
-import { formatPhoneNumber } from '~/core/utility';
-import { signOut, setPastOrders } from '~/store/actions';
+import {formatPhoneNumber} from '~/core/utility';
+import {signOut, setPastOrders} from '~/store/actions';
 
 export const MyAccountScreen = () => {
   const dispatch = useDispatch();
-  const userInfo = useSelector((state) => state.account.userInfo);
+  const userInfo = useSelector(state => state.account.userInfo);
 
   return (
     <Screen>
@@ -20,18 +20,13 @@ export const MyAccountScreen = () => {
           <AppText style={styles.name}>
             {userInfo.firstName} {userInfo.lastName}
           </AppText>
-          <AppText style={styles.number}>
-            {userInfo.email}
-          </AppText>
-          {/* <AppText style={styles.number}>
-            {formatPhoneNumber(userInfo.phone)}
-          </AppText> */}
+          <AppText style={styles.number}>{userInfo.email}</AppText>
           <Button
             type="bordered-dark"
             style={GlobalStyles.formControl}
             onClick={() => {
               NavigationService.navigate('Splash');
-              BackgroundTimer.stopBackgroundTimer(); 
+              BackgroundTimer.stopBackgroundTimer();
               dispatch(setPastOrders(false));
               dispatch(signOut());
             }}>
@@ -54,7 +49,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     fontWeight: 'bold',
-    // textTransform: 'uppercase',
     marginBottom: 5,
   },
 
@@ -67,7 +61,7 @@ const styles = StyleSheet.create({
   },
 });
 
-MyAccountScreen.navigationOptions = ({ navigation }) =>
+MyAccountScreen.navigationOptions = ({navigation}) =>
   MainNavigationOptions({
     navigation,
     options: {

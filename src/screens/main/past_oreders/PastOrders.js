@@ -460,9 +460,6 @@ export const PastOrdersScreen = ({navigation}) => {
   useEffect(() => {
     if (new_Order_Cnt > 0) {
       playSound('order');
-      console.log(
-        'timer 2222222222222222222222222222222222222222222222222222222222222222222222 in pastorders',
-      );
     }
     if (unread > 0) {
       playSound('message');
@@ -522,7 +519,6 @@ export const PastOrdersScreen = ({navigation}) => {
 
   useEffect(() => {
     shouldUpdateOrders();
-    console.log('Refresing the list');
     fetchAPI(`/refresh?app=seller&last_time_checked=`, {
       method: 'Get',
       headers: {
@@ -555,11 +551,6 @@ export const PastOrdersScreen = ({navigation}) => {
           },
         })
           .then(async res => {
-            console.log(
-              '@@refresh -------@@@@@@@@@@@@@@ in pastorders',
-              res.data,
-            );
-
             dispatch(setUnreadMsgCnt(res.data.messages_unopened_total));
             if (res.data.updated_messages_unopened_total > 0) {
               dispatch(enterMessageRoom(true));
@@ -583,7 +574,6 @@ export const PastOrdersScreen = ({navigation}) => {
                 body: formData,
               })
                 .then(res => {
-                  console.log('new order found!!!!', res.data);
                   if (res.data.orders.length > 0) {
                     res.data.orders.map((item, index) => {
                       setNewOrders(item);
@@ -610,7 +600,6 @@ export const PastOrdersScreen = ({navigation}) => {
   useEffect(() => {
     if (activeTab == 1 && updated_deliveries_total > 0) {
       if (token) {
-        console.log('11111111111111');
         fetchAPI(
           `/deliveries?app=seller&page=0&size=${(page_request + 1) * listCnt}`,
           {
@@ -621,7 +610,6 @@ export const PastOrdersScreen = ({navigation}) => {
           },
         )
           .then(res => {
-            console.log('11111111111@@@@@@@@111');
             setRecentRequest(false);
             setRecentRequest(
               res.data.deliveries.filter(item => item.status_name != 'Pending'),
@@ -637,7 +625,6 @@ export const PastOrdersScreen = ({navigation}) => {
     if (activeTab == 1) {
       timer = setInterval(() => {
         if (token) {
-          console.log('11111111real timer111111');
           fetchAPI(
             `/deliveries?app=seller&page=0&size=${
               (page_request + 1) * listCnt
@@ -650,7 +637,6 @@ export const PastOrdersScreen = ({navigation}) => {
             },
           )
             .then(res => {
-              console.log('11111111111@@@@@@@@111');
               setRecentRequest(false);
               setRecentRequest(
                 res.data.deliveries.filter(
@@ -703,7 +689,6 @@ export const PastOrdersScreen = ({navigation}) => {
   useEffect(() => {
     if (activeTab == 0 && updated_orders_total > 0) {
       if (token) {
-        console.log('0000000000013timer');
         const formData = new FormData();
         formData.append('app', 'seller');
         formData.append('page', 0);
@@ -716,7 +701,6 @@ export const PastOrdersScreen = ({navigation}) => {
           body: formData,
         })
           .then(res => {
-            console.log('00000000000000');
             dispatch(setPastOrders(false));
             dispatch(
               setPastOrders(

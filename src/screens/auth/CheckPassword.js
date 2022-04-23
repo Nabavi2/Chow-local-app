@@ -7,15 +7,11 @@ import {Screen, Input, Button, AppText} from '~/components';
 import {GlobalStyles, Theme} from '~/styles';
 
 import {fetchAPI} from '~/core/utility';
-import {
-  setToken,
-  setUserInfo,
-  showNotification,
-  setOrder,
-} from '~/store/actions';
+import {setToken, setUserInfo, showNotification} from '~/store/actions';
 import {RegisterNavigationOptions} from '~/styles';
 import {firebase} from '@react-native-firebase/app';
 import messaging from '@react-native-firebase/messaging';
+
 export const CheckPasswordScreen = ({navigation}) => {
   const [email, setEmail] = useState(''); //fang89517@gmail.com
   const [password, setPassword] = useState(''); //123456
@@ -138,31 +134,25 @@ const styles = StyleSheet.create({
     paddingTop: Theme.layout.screenPaddingTop,
     paddingBottom: Theme.layout.screenPaddingBottom,
     flex: 1,
-
     width: '100%',
   },
-
   button: {
     marginTop: 30,
   },
-
   greenText: {
     color: Theme.color.accentColor,
     textAlign: 'center',
     textTransform: 'uppercase',
   },
-
   whiteText: {
     color: 'white',
     textAlign: 'center',
   },
-
   title: {
     fontSize: 30,
     letterSpacing: 2,
     fontWeight: '800',
   },
-
   subTitle: {
     fontSize: 18,
     fontWeight: 'bold',

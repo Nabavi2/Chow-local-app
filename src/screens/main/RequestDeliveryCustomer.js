@@ -39,7 +39,6 @@ export const RequestDeliveryCustomerScreen = ({navigation}) => {
       body: formData,
     })
     .then((res) => {
-      console.log("here!!!!!!!!!!!!",res.data);
       // NavigationService.navigate("RequestDeliveryDetail", {delivery_request_id: delivery_request_Id, delivery_fee_amount: res.data.delivery_fee_amount, tax_amount: res.data.tax_amount, total_amount: res.data.total_amount, pickup_address: pickup_address, dropoff_address: address})
       NavigationService.navigate("RequestDeliveryOutside1", {delivery_total_amount: res.data.total_amount, delivery_request_id: delivery_request_Id, pickup_address: pickup_address, dropoff_address: dropoff_address})
     })
@@ -67,14 +66,6 @@ return (
         editable={true}
         onChange={(e) => setFirstName(e)}
       />     
-      {/* <Input
-        style={GlobalStyles.formControl}
-        title="Last Name"
-        placeholder={"Enter last name"}
-        value={lastName}
-        editable={true}
-        onChange={(e) => setLastName(e)}
-      /> */}
       <Input
         style={GlobalStyles.formControl}
         title="Phone #"
@@ -84,15 +75,6 @@ return (
         editable={true}
         onChange={(e) => setPhone(e)}
       />
-      {/* <Input
-        style={GlobalStyles.formControl}
-        title="E-mail"
-        placeholder="Enter a email address"
-        value={email}
-        editable={true}
-        keyboardType="email-address"
-        onChange={(e) => setEmail(e)}
-      /> */}
       </View>
       
       <Button

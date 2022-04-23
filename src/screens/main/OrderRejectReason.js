@@ -83,7 +83,6 @@ export const OrderRejectReasonScreen = ({ navigation }) => {
       body: formData,
     })
       .then((res) => {
-        console.log("RERRRRFund SENTTTTTTTTTTTTTTTTTTTTTTTTT", res.data);      
         dispatch(updateStatus("Rejected"));
         // dispatch(isUpdateStatus(!is_update_status));
         showRefundSent();

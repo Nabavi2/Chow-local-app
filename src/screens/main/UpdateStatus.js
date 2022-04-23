@@ -6,7 +6,6 @@ import {NavigationService} from '~/core/services';
 import {Screen, Button, AppText} from '~/components';
 import {GlobalStyles, MainNavigationOptions, Theme} from '~/styles';
 
-import {formatPhoneNumber} from '~/core/utility';
 import {showNotification, updateStatus, isUpdateStatus} from '~/store/actions';
 
 export const UpdateStatusScreen = ({navigation}) => {
@@ -15,7 +14,6 @@ export const UpdateStatusScreen = ({navigation}) => {
   const token = useSelector(state => state.account.token);
   const status_slug = useSelector(state => state.order.status_slug);
   const is_update_status = useSelector(state => state.order.updated);
-  // const [orderStatus, setOrderStatus] = useState('open');
   const userInfo = useSelector(state => state.account.userInfo);
   const orderId = useMemo(() => navigation.getParam('orderId'), []);
   const type = useMemo(() => navigation.getParam('type'), []);
@@ -41,7 +39,6 @@ export const UpdateStatusScreen = ({navigation}) => {
       body: formData,
     })
       .then(res => {
-      
         setOrderDetail(res.data);
       })
       .catch(err =>
@@ -93,7 +90,6 @@ export const UpdateStatusScreen = ({navigation}) => {
                 item != 'processing',
             ),
           );
-         
         }
       })
       .catch(err =>
